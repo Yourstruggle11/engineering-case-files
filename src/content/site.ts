@@ -98,28 +98,28 @@ export const sectionCopy: Record<
       "Each case is framed as a solved engineering file: what the problem was, what had to be understood, how the approach was shaped, and what evidence supports the outcome."
   },
   evidence: {
-    label: "Evidence",
-    title: "Measured outcomes that point to practical engineering impact.",
+    label: "Evidence Log",
+    title: "Verified outcomes from performance, workflow, and delivery work.",
     description:
-      "The evidence set below focuses on performance, responsiveness, and delivery systems rather than inflated generalities."
+      "A recorded set of measurable improvements across latency, state synchronization, delivery systems, and deployment workflow."
   },
   fieldNotes: {
     label: "Field Notes",
-    title: "A progression from broad web work into stronger systems, product, and frontend depth.",
+    title: "A progression from broad web work into systems, product, and frontend depth.",
     description:
-      "The timeline is intentionally concise. It tracks how the work moved from general implementation into more structured engineering ownership."
+      "A concise timeline of how the work moved from implementation breadth into stronger product judgment, operational rigor, and frontend ownership."
   },
   archive: {
     label: "Archive",
-    title: "A smaller public archive of utilities, packages, and developer-facing tools.",
+    title: "A public archive of utilities, packages, and developer-facing tools.",
     description:
-      "The open source work leans toward practical usefulness: reusable React systems, backend generators, and focused utilities."
+      "A smaller set of published tools focused on reusable abstractions, workflow polish, and practical starting points."
   },
   reports: {
     label: "Reports",
-    title: "Technical writing used to unpack internals, engineering ideas, and implementation tradeoffs.",
+    title: "Technical writing on internals, engineering ideas, and implementation tradeoffs.",
     description:
-      "The writing reflects the same bias as the code work: make the thinking legible, reduce noise, and explain what actually matters."
+      "Notes and explainers written to make the underlying thinking legible, not just the final API surface."
   },
   contact: {
     label: "Contact",

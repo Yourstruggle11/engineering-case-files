@@ -5,7 +5,16 @@ export const reportItems: ReportItem[] = [
     title: "React 19 Reconciliation Deep Dive",
     summary:
       "A closer look at React internals and the engineering implications of reconciliation behavior.",
-    href: "https://medium.com/@souviksen093/react-19-reconciliation-deep-dive-ed433ce1e375"
+    href: "https://medium.com/@souviksen093/react-19-reconciliation-deep-dive-ed433ce1e375",
+    relatedReadings: [
+      {
+        title: "Understanding React Reconciliation in React 18: A Deep Dive",
+        summary:
+          "React 18's enhanced reconciliation algorithm brings harmony between performance and user experience, propelling web development to new heights.",
+        href: "https://medium.com/@souviksen093/understanding-react-reconciliation-in-react-18-a-deep-dive-16b083e5592a",
+        meta: "4 min read / Jun 3, 2023"
+      }
+    ]
   },
   {
     title: "Your Google Maps Works Because of Einstein",

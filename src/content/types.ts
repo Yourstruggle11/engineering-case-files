@@ -70,4 +70,10 @@ export type ReportItem = {
   title: string;
   summary: string;
   href: string;
+  relatedReadings?: {
+    title: string;
+    summary: string;
+    href: string;
+    meta: string;
+  }[];
 };

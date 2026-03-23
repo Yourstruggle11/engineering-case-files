@@ -1,6 +1,7 @@
 import { ExternalLink } from "@/components/shared/external-link";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Label } from "@/components/shared/label";
+import { SectionFrame } from "@/components/shared/section-frame";
 import { SectionHeader } from "@/components/shared/section-header";
 import { archiveItems } from "@/content/archive";
 import { sectionCopy } from "@/content/site";
@@ -15,26 +16,38 @@ export function ArchiveSection() {
           label={content.label}
           title={content.title}
           description={content.description}
+          variant="split"
         />
       </FadeIn>
-      <div className="section-stack grid gap-4 sm:gap-5 xl:grid-cols-2">
-        {archiveItems.map((item, index) => (
-          <FadeIn key={item.name} delay={0.04 * index}>
-            <article className="surface-panel flex h-full flex-col p-5 sm:p-6 lg:p-7">
-              <Label>Archive Entry</Label>
-              <h3 className="mt-4 text-[1.9rem] leading-tight text-text sm:text-[2rem]">
-                {item.name}
-              </h3>
-              <p className="mt-4 flex-1 text-text-muted">{item.description}</p>
-              <div className="mt-6">
-                <ExternalLink href={item.href} className="button-secondary">
-                  Open Archive Item
-                </ExternalLink>
-              </div>
-            </article>
-          </FadeIn>
-        ))}
-      </div>
+      <FadeIn className="section-stack" delay={0.04}>
+        <SectionFrame>
+          <div className="grid gap-0">
+            {archiveItems.map((item, index) => (
+              <article
+                key={item.name}
+                className={`grid gap-4 py-5 sm:gap-5 sm:py-6 lg:grid-cols-[112px_minmax(0,1fr)_auto] lg:items-start lg:gap-8 ${
+                  index !== archiveItems.length - 1 ? "border-b border-line" : ""
+                }`}
+              >
+                <div className="pt-1">
+                  <Label>Archive {String(index + 1).padStart(2, "0")}</Label>
+                </div>
+                <div className="max-w-[42rem]">
+                  <h3 className="text-[1.75rem] leading-tight text-text sm:text-[1.95rem]">
+                    {item.name}
+                  </h3>
+                  <p className="mt-3 text-text-muted">{item.description}</p>
+                </div>
+                <div className="lg:justify-self-end">
+                  <ExternalLink href={item.href} className="button-secondary w-full sm:w-auto">
+                    Open Archive Item
+                  </ExternalLink>
+                </div>
+              </article>
+            ))}
+          </div>
+        </SectionFrame>
+      </FadeIn>
     </section>
   );
 }

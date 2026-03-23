@@ -27,6 +27,7 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
+    radial-gradient(circle at top center, rgba(143, 187, 207, 0.08), transparent 28%),
     radial-gradient(circle at top left, rgba(143, 187, 207, 0.1), transparent 26%),
     radial-gradient(circle at top right, rgba(143, 187, 207, 0.05), transparent 22%),
     radial-gradient(circle at bottom center, rgba(143, 187, 207, 0.05), transparent 32%),
@@ -112,7 +113,9 @@ img {
     content: "";
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at center, transparent 48%, rgba(0, 0, 0, 0.26) 100%);
+    background:
+      radial-gradient(circle at center, transparent 46%, rgba(0, 0, 0, 0.26) 100%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.18));
     pointer-events: none;
     z-index: -1;
   }
@@ -160,6 +163,33 @@ img {
 
   .section-stack {
     @apply mt-7 sm:mt-8 lg:mt-10;
+  }
+
+  .section-frame {
+    @apply relative overflow-hidden rounded-[28px] border border-line-strong bg-panel-strong p-5 shadow-panel backdrop-blur-xl sm:p-7 lg:p-8 xl:p-9;
+  }
+
+  .section-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at top right, rgba(143, 187, 207, 0.12), transparent 34%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 30%);
+    pointer-events: none;
+  }
+
+  .section-frame::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    pointer-events: none;
+  }
+
+  .section-frame-inner {
+    @apply relative;
   }
 
   .reading-copy {
