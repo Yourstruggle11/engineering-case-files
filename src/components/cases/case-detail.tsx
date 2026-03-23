@@ -1,0 +1,184 @@
+import type { ReactNode } from "react";
+import Link from "next/link";
+import { ExternalLink } from "@/components/shared/external-link";
+import { FadeIn } from "@/components/shared/fade-in";
+import { Divider } from "@/components/shared/divider";
+import { Label } from "@/components/shared/label";
+import type { CaseFile } from "@/content/types";
+
+type CaseDetailProps = {
+  caseFile: CaseFile;
+};
+
+type SectionBlockProps = {
+  label: string;
+  title: string;
+  children: ReactNode;
+};
+
+function SectionBlock({ label, title, children }: SectionBlockProps) {
+  return (
+    <section className="grid gap-4 lg:grid-cols-[108px_minmax(0,1fr)] lg:gap-8">
+      <div className="hidden pt-2 lg:block">
+        <Label>{label}</Label>
+      </div>
+      <div>
+        <Divider label={label} className="lg:hidden" />
+        <Divider className="hidden lg:flex" />
+        <div className="mt-4">
+          <h2 className="text-[1.85rem] leading-tight text-text sm:text-[2.35rem]">
+            {title}
+          </h2>
+        </div>
+        <div className="mt-4 text-text-muted">{children}</div>
+      </div>
+    </section>
+  );
+}
+
+export function CaseDetail({ caseFile }: CaseDetailProps) {
+  return (
+    <main className="shell-container pb-16 pt-8 sm:pb-20 sm:pt-10 lg:pb-24 lg:pt-12">
+      <FadeIn>
+        <Link href="/#cases" className="link-inline">
+          <span aria-hidden="true">{"<-"}</span>
+          Back to case index
+        </Link>
+      </FadeIn>
+
+      <FadeIn className="surface-panel-strong mt-5 p-5 sm:mt-6 sm:p-7 lg:p-10" delay={0.04}>
+        <div className="grid gap-8 xl:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] xl:gap-10">
+          <div className="max-w-[48rem]">
+            <Label>CASE {caseFile.caseNumber}</Label>
+            <h1 className="mt-4 max-w-[12ch] text-balance text-[clamp(2.4rem,9vw,5.2rem)] leading-[0.98] text-text">
+              {caseFile.title}
+            </h1>
+            <p className="mt-5 max-w-[40rem] text-base text-text-muted sm:text-lg lg:text-[1.15rem]">
+              {caseFile.summary}
+            </p>
+          </div>
+
+          <aside className="rounded-[24px] border border-line bg-background-soft p-5 sm:p-6">
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+              <div className="rounded-[20px] border border-line bg-background-soft p-4 sm:p-5">
+                <Label>Status</Label>
+                <p className="mt-3 text-base text-text">{caseFile.status}</p>
+              </div>
+              <div className="rounded-[20px] border border-line bg-background-soft p-4 sm:p-5">
+                <Label>Filed Under</Label>
+                <p className="mt-3 text-base text-text">{caseFile.filedUnder}</p>
+              </div>
+            </div>
+
+            <Divider className="mt-6" label="External Links" />
+
+            <div className="mt-4 flex flex-wrap gap-3">
+              {caseFile.links.map((link) => (
+                <ExternalLink key={link.href} href={link.href} className="button-secondary">
+                  {link.label}
+                </ExternalLink>
+              ))}
+            </div>
+          </aside>
+        </div>
+      </FadeIn>
+
+      <div className="mt-10 grid gap-8 sm:mt-12 sm:gap-10 lg:mt-14 lg:gap-12">
+        <FadeIn delay={0.06}>
+          <SectionBlock label="01" title="Background">
+            <p className="reading-copy">{caseFile.background}</p>
+          </SectionBlock>
+        </FadeIn>
+
+        <FadeIn delay={0.08}>
+          <SectionBlock label="02" title="The Problem">
+            <p className="reading-copy">{caseFile.problem}</p>
+          </SectionBlock>
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <SectionBlock label="03" title="Investigation">
+            <ol className="grid gap-3 sm:gap-4">
+              {caseFile.investigation.map((item, index) => (
+                <li
+                  key={item}
+                  className="rounded-[20px] border border-line bg-panel p-4 sm:p-5"
+                >
+                  <Label>Line {String(index + 1).padStart(2, "0")}</Label>
+                  <p className="mt-3 text-[15px] text-text-muted sm:text-base">{item}</p>
+                </li>
+              ))}
+            </ol>
+          </SectionBlock>
+        </FadeIn>
+
+        <FadeIn delay={0.12}>
+          <SectionBlock label="04" title="Approach">
+            <ol className="grid gap-3 sm:gap-4">
+              {caseFile.approach.map((item, index) => (
+                <li
+                  key={item}
+                  className="rounded-[20px] border border-line bg-panel p-4 sm:p-5"
+                >
+                  <Label>Action {String(index + 1).padStart(2, "0")}</Label>
+                  <p className="mt-3 text-[15px] text-text-muted sm:text-base">{item}</p>
+                </li>
+              ))}
+            </ol>
+          </SectionBlock>
+        </FadeIn>
+
+        <FadeIn delay={0.14}>
+          <SectionBlock label="05" title="Architecture">
+            <div className="grid gap-3 sm:gap-4 md:grid-cols-2 2xl:grid-cols-3">
+              {caseFile.architecture.map((item, index) => (
+                <article
+                  key={item}
+                  className="rounded-[20px] border border-line bg-panel p-4 sm:p-5"
+                >
+                  <Label>Structure {String(index + 1).padStart(2, "0")}</Label>
+                  <p className="mt-3 text-[15px] text-text-muted sm:text-base">{item}</p>
+                </article>
+              ))}
+            </div>
+          </SectionBlock>
+        </FadeIn>
+
+        <FadeIn delay={0.16}>
+          <SectionBlock label="06" title="Outcome">
+            <p className="reading-copy">{caseFile.outcomeDetail}</p>
+          </SectionBlock>
+        </FadeIn>
+
+        <FadeIn delay={0.18}>
+          <SectionBlock label="07" title="Evidence">
+            <div className="grid gap-3 sm:gap-4 md:grid-cols-2 2xl:grid-cols-3">
+              {caseFile.evidence.map((item) => (
+                <article
+                  key={item.title}
+                  className="rounded-[20px] border border-line bg-panel p-4 sm:p-5"
+                >
+                  <Label>{item.label}</Label>
+                  <h3 className="mt-3 text-xl leading-tight text-text">{item.title}</h3>
+                  <p className="mt-3 text-sm text-text-muted">{item.description}</p>
+                </article>
+              ))}
+            </div>
+          </SectionBlock>
+        </FadeIn>
+
+        <FadeIn delay={0.2}>
+          <SectionBlock label="08" title="Links">
+            <div className="flex flex-wrap gap-3">
+              {caseFile.links.map((link) => (
+                <ExternalLink key={link.href} href={link.href} className="button-secondary">
+                  {link.label}
+                </ExternalLink>
+              ))}
+            </div>
+          </SectionBlock>
+        </FadeIn>
+      </div>
+    </main>
+  );
+}
