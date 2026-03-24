@@ -39,8 +39,12 @@ export type CaseLink = {
 };
 
 export type CaseFile = {
-  slug: "react-dragdrop-kit" | "notifyflux" | "haveitdiscussed";
-  caseNumber: "001" | "002" | "003";
+  slug:
+    | "react-dragdrop-kit"
+    | "notifyflux"
+    | "haveitdiscussed"
+    | "phlo-systems-fintech-workflows";
+  caseNumber: "001" | "002" | "003" | "004";
   title: string;
   status: string;
   filedUnder: string;

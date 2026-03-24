@@ -72,9 +72,9 @@ export const heroCopy = {
 
 export const heroHighlights: HeroHighlight[] = [
   {
-    value: "003",
+    value: "004",
     label: "Featured cases",
-    detail: "UI engineering, real-time systems, and full-stack product work."
+    detail: "UI engineering, real-time systems, full-stack product work, and enterprise fintech workflows."
   },
   {
     value: "004",
@@ -94,7 +94,7 @@ export const sectionCopy: Record<
 > = {
   cases: {
     label: "Featured Cases",
-    title: "Three documented investigations across interface systems, real-time architecture, and product delivery.",
+    title: "Four documented investigations across interface systems, real-time architecture, product delivery, and enterprise trade-finance workflows.",
     description:
       "Each case is framed as a solved engineering file: what the problem was, what had to be understood, how the approach was shaped, and what evidence supports the outcome."
   },
@@ -133,8 +133,8 @@ export const sectionCopy: Record<
 export const casesRegister: InfoNote[] = [
   {
     label: "Recorded Files",
-    value: "03 active cases",
-    detail: "UI engineering, real-time systems, and full-stack product delivery."
+    value: "04 active cases",
+    detail: "UI engineering, real-time systems, full-stack product delivery, and regulated workflow surfaces."
   },
   {
     label: "Coverage",

@@ -46,10 +46,10 @@ export function CasesSection() {
 
             <Divider label="Case Register" />
 
-            <div className="grid gap-4 sm:gap-5 xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] xl:items-start">
+            <div className="grid gap-4 sm:gap-5 xl:grid-cols-2 xl:items-start xl:gap-6 2xl:gap-7">
               <CaseCard caseFile={featuredCase} delay={0.05} variant="feature" />
 
-              <div className="grid gap-4 sm:gap-5">
+              <div className="grid auto-rows-max gap-4 sm:gap-4">
                 {supportingCases.map((caseFile, index) => (
                   <CaseCard
                     key={caseFile.slug}
