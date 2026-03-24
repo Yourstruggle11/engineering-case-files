@@ -7,10 +7,27 @@ export const caseFiles: CaseFile[] = [
     title: "react-dragdrop-kit",
     status: "Published package",
     filedUnder: "UI Engineering / Open Source",
+    labProfile: "component-lab",
     summary:
       "Controlled drag-and-drop primitives for React: sortable lists and grids, plus a headless Kanban path, built on pragmatic-drag-and-drop and shipped as a tree-shakeable npm package with a live demo.",
     outcome:
       "A reusable layer for reorder and board moves where application code owns IDs, positions, and persistence while the toolkit standardises drag mechanics and drop semantics.",
+    outcomeSnapshot:
+      "Tree-shakeable npm package with list and Kanban entry points; demo + Medium write-up as the behavioural contract.",
+    tradeoffNotes: [
+      {
+        title: "Wrapper depth vs. auditable integration",
+        body: "High-level DnD libraries that hide state shrink boilerplate but make permission checks, optimistic UI, and server reconciliation harder to trace. pragmatic-drag-and-drop keeps mechanics predictable while the host owns data shape and persistence boundaries."
+      },
+      {
+        title: "Explicit callbacks over silent mutation",
+        body: "The package rejects mutating consumer stores internally. That trades a slightly larger integration surface (`onReorder`, `onDragEnd`) for compile-time-friendly boundaries and a single place to audit writes."
+      },
+      {
+        title: "Kanban as normalised state + pure transition",
+        body: "A columns/cards map with `applyDragResult` lets the same move logic run in tests or server reconciliation without mounting React—useful when board moves must stay consistent across tabs or retries."
+      }
+    ],
     background:
       "The work started from repeat product needs: sortable task lists, grid-like reordering, and Kanban-style moves across columns. Each surface was small on its own, but constraints were tight—no heavy runtime, behaviour had to stay predictable under React re-renders, and consumer apps needed to enforce their own rules (permissions, optimistic UI, server sync). Publishing as a library meant the demo site and README had to prove behaviour, not only API shape.",
     problem:
@@ -69,10 +86,62 @@ export const caseFiles: CaseFile[] = [
     title: "NotifyFlux",
     status: "Documented systems build",
     filedUnder: "Real-time Systems",
+    labProfile: "systems-lab",
     summary:
       "Multi-tenant notification stack: Express and Socket.IO, MongoDB change streams, Redis-backed socket fan-out, JWT-scoped tenancy, and a React admin console for delivery visibility.",
     outcome:
       "An end-to-end path from persisted events to tenant-scoped real-time delivery, with an operator-facing UI that shows activity instead of hiding it behind raw API calls.",
+    outcomeSnapshot:
+      "Docker-compose runnable stack: Mongo replica set + change streams, Redis-backed Socket.IO, Express API, Vite admin UI.",
+    failureCallouts: [
+      {
+        title: "Invisible mid-flight work",
+        detail:
+          "REST polling can make the system look quiet while events are still moving through sockets—operators need UI that reflects commits and delivery, not only last fetch."
+      },
+      {
+        title: "Room coherence across processes",
+        detail:
+          "Without a shared adapter, horizontal scaling splits socket state per node and risks missed or mis-scoped broadcasts; tenant-scoped rooms must stay aligned with JWT claims."
+      }
+    ],
+    eventFlow: [
+      {
+        title: "Persisted write",
+        detail:
+          "Notifications land in MongoDB with tenant scope; the database remains the source of truth before anything is broadcast."
+      },
+      {
+        title: "Change stream fan-out",
+        detail:
+          "Committed writes surface change events so the API reacts to data the database already accepted—avoiding hot-path polling loops."
+      },
+      {
+        title: "Redis-backed Socket.IO",
+        detail:
+          "Broadcasts and room membership stay coherent across API instances instead of trapping state on a single Node process."
+      },
+      {
+        title: "Tenant-scoped delivery",
+        detail:
+          "JWT claims carry `tenantId`; rooms map tenants and users so delivery paths do not collapse into a global broadcast."
+      },
+      {
+        title: "Operator surface",
+        detail:
+          "The React admin consumes the same API and listens live so throughput and recent activity remain legible under load."
+      }
+    ],
+    tradeoffNotes: [
+      {
+        title: "Operational dependency on Redis",
+        body: "The Redis adapter trades an extra moving part for horizontal socket scale. Single-node Socket.IO is simpler to run locally but caps fan-out when the API replicas grow."
+      },
+      {
+        title: "Replica-set Mongo for streams",
+        body: "Change streams expect replica-set semantics. Local and compose setups document that constraint so stream wiring fails clearly in dev instead of silently in prod."
+      }
+    ],
     background:
       "NotifyFlux was built as a full-stack exercise in SaaS-style notifications: multiple tenants, live delivery feedback, and an admin surface that stays usable when throughput grows. Constraints included keeping isolation provable (no accidental cross-tenant reads on the socket layer), making local and Docker-based runs reproducible, and exposing health and metrics for operations. The trigger was the gap between “we stored a notification” and “subscribers saw it quickly, in the right tenant context.”",
     problem:
@@ -124,10 +193,57 @@ export const caseFiles: CaseFile[] = [
     title: "HaveItDiscussed",
     status: "Live product build",
     filedUnder: "Full-stack Product",
+    labProfile: "product-lab",
     summary:
       "Developer community client: discussions, threaded comments, likes, profiles, social graph, notification hub, and dark mode—deployed to Netlify against a separate Node API (`HaveItDiscussed-Server`).",
     outcome:
       "A shipped forum product where reading, posting, and notifications share consistent client patterns instead of each screen inventing its own data lifecycle.",
+    outcomeSnapshot:
+      "Live Netlify client wired to a documented REST API—threads, reactions, profiles, and notifications as one cohesive product.",
+    journeyPhases: [
+      {
+        id: "discover",
+        title: "Discover & read",
+        summary:
+          "Feeds and thread detail prioritise skimmable discussion metadata—reply depth, recency, and engagement cues—without fragmenting layout across breakpoints.",
+        decisionNote:
+          "Responsive rules live in the same components rather than parallel mobile routes so behaviour stays consistent when users move between phones and desktops."
+      },
+      {
+        id: "participate",
+        title: "Participate in threads",
+        summary:
+          "Comment trees and likes share mutation patterns with the thread model so posting feels continuous with reading instead of bolting on a separate editor flow.",
+        decisionNote:
+          "After post/like actions, refetch or invalidate is intentional—no reliance on full reloads to reconcile counts that the server already updated."
+      },
+      {
+        id: "identity",
+        title: "Profiles & social graph",
+        summary:
+          "Profiles and friend requests extend the discussion graph rather than siloing identity in static pages, keeping the social context adjacent to participation.",
+        decisionNote:
+          "Split repositories keep the client orchestrating a documented API; auth and pagination rules stay authoritative on the server."
+      },
+      {
+        id: "notify",
+        title: "Notification hub",
+        summary:
+          "Comments, likes, and friend activity converge in one notification centre so engagement signals reinforce the same thread primitives the rest of the app uses.",
+        decisionNote:
+          "Treating notifications as first-class flows avoids modal hacks that would diverge from how thread data is fetched elsewhere."
+      }
+    ],
+    tradeoffNotes: [
+      {
+        title: "Structured state over ad hoc context",
+        body: "A single giant React context for every entity was ruled out; domain-shaped fetch ownership per route scales better as features grow."
+      },
+      {
+        title: "Environment-configured API base",
+        body: "Pointing the client at `localhost:5000` or deploy targets via env keeps one codebase across local review and production without string forks."
+      }
+    ],
     background:
       "HaveItDiscussed is a user-facing React application aimed at programmers asking and answering questions in threads. The surface area spans feeds, thread detail, comments, reactions, profiles, friend requests, and a notification centre. Constraints included staying responsive on small viewports, keeping API access configurable via environment (local API vs deployed), and keeping feature work incremental as the platform evolved from an earlier version documented in the repo history.",
     problem:
@@ -182,10 +298,62 @@ export const caseFiles: CaseFile[] = [
     title: "Phlo Systems — trade-finance workflows",
     status: "In progress",
     filedUnder: "Enterprise fintech / workflow UX",
+    labProfile: "operations-lab",
     summary:
       "Frontend work on regulated trade-finance and operations surfaces: long-running cases, document-heavy steps, and dashboards where operators need current status without fighting the UI. Filed while the implementation is still evolving inside the organisation.",
     outcome:
       "A documented line of work on enterprise workflow UX and live data—scoped honestly as in-flight, with public references limited to organisation context and role-level description.",
+    outcomeSnapshot:
+      "In-progress: targeting stale queue dashboards and duplicated workflow shells with SignalR-aware freshness and shared primitives where product rules allow.",
+    workflowBeats: [
+      {
+        phase: "Queue & dashboard hot paths",
+        friction:
+          "Polling-first views could understate urgency—operators saw idle screens while backend queues had already advanced.",
+        response:
+          "SignalR (already in the surrounding stack) anchors high-churn regions to server-authoritative events; the UI treats pushes as hints to refetch or patch known caches, not blind full snapshots."
+      },
+      {
+        phase: "Workflow shell reuse",
+        friction:
+          "Duplicated headers, step lists, and document panels across instrument families slowed new variants because validation and navigation were re-wired each time.",
+        response:
+          "Stable workflow shells with swappable step content reduce copy-paste scaffolding while still allowing instrument-specific rules where abstractions would mis-fit."
+      },
+      {
+        phase: "Operational clarity",
+        friction:
+          "Finance operators need plainspoken loading, reconnect, and degradation behaviour—quiet sockets read as uncertainty, not calm.",
+        response:
+          "Error and reconnect surfaces are part of the feature set; auth and policy remain server-side with the UI reflecting permissions without implementing them."
+      }
+    ],
+    beforeAfter: [
+      {
+        label: "Dashboard freshness",
+        before:
+          "Manual refresh or slow polling as the primary signal of queue movement—higher poll rates add load without guaranteed ordering against rapid successive events.",
+        after:
+          "Live regions align with committed server events; incremental updates reduce the stale-queue failure mode on the hottest operations views."
+      },
+      {
+        label: "Workflow delivery",
+        before:
+          "Repeated one-off wiring for step navigation and document panels when standing up a new instrument workflow.",
+        after:
+          "Shared primitives for shells and validation patterns where product rules converge; bespoke only where the instrument genuinely diverges."
+      }
+    ],
+    tradeoffNotes: [
+      {
+        title: "SignalR vs. long polling",
+        body: "Long polling is simpler to reason about fail-mode-wise but still races rapid updates; SignalR shifts complexity to connection lifecycle while improving timeliness for operators juggling multiple queues."
+      },
+      {
+        title: "Public record vs. internal detail",
+        body: "Schemas, customer data, and internal service names stay out of this file; the portfolio captures problem class and architectural shape consistent with public Phlo positioning, not proprietary identifiers."
+      }
+    ],
     background:
       "Phlo Systems builds digitised international trade and trade-finance software; day-to-day engineering includes workflow-heavy React and .NET surfaces where a case can span KYC, credit, collateral, and operational checks. Constraints are typical of regulated fintech: auditability, least-surprise behaviour, and consistency across modules that did not all ship at once. The work under this file was triggered where batch-style refresh patterns collided with operators who move between queues and instrument detail throughout the day.",
     problem:

@@ -38,6 +38,47 @@ export type CaseLink = {
   href: string;
 };
 
+/** Drives shared lab chrome and case-specific composition. */
+export type CaseLabProfile =
+  | "component-lab"
+  | "systems-lab"
+  | "product-lab"
+  | "operations-lab";
+
+export type CaseTradeoffNote = {
+  title: string;
+  body: string;
+};
+
+export type CaseFlowStep = {
+  title: string;
+  detail: string;
+};
+
+export type CaseJourneyPhase = {
+  id: string;
+  title: string;
+  summary: string;
+  decisionNote: string;
+};
+
+export type CaseFailureCallout = {
+  title: string;
+  detail: string;
+};
+
+export type CaseWorkflowBeat = {
+  phase: string;
+  friction: string;
+  response: string;
+};
+
+export type CaseBeforeAfter = {
+  label: string;
+  before: string;
+  after: string;
+};
+
 export type CaseFile = {
   slug:
     | "react-dragdrop-kit"
@@ -50,6 +91,8 @@ export type CaseFile = {
   filedUnder: string;
   summary: string;
   outcome: string;
+  /** Optional one-line headline for the brief aside; defaults to `outcome` when omitted. */
+  outcomeSnapshot?: string;
   background: string;
   problem: string;
   investigation: string[];
@@ -58,6 +101,19 @@ export type CaseFile = {
   outcomeDetail: string;
   evidence: CaseEvidence[];
   links: CaseLink[];
+  labProfile: CaseLabProfile;
+  /** Deeper investigation notes surfaced in tradeoff panels. */
+  tradeoffNotes?: CaseTradeoffNote[];
+  /** Systems-style event path (e.g. NotifyFlux). */
+  eventFlow?: CaseFlowStep[];
+  /** Product journey tabs (e.g. HaveItDiscussed). */
+  journeyPhases?: CaseJourneyPhase[];
+  /** Reliability / isolation callouts for systems cases. */
+  failureCallouts?: CaseFailureCallout[];
+  /** Operational workflow beats (e.g. Phlo). */
+  workflowBeats?: CaseWorkflowBeat[];
+  /** Before/after process comparison rows. */
+  beforeAfter?: CaseBeforeAfter[];
 };
 
 export type Metric = {
