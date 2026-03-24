@@ -35,9 +35,9 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
-        <div className="mx-auto flex w-full max-w-[1240px] items-center justify-between gap-2 rounded-[24px] border border-line bg-panel/95 px-3 py-3 shadow-panel backdrop-blur-xl sm:gap-3 sm:px-5">
-          <Link href="/" className="min-w-0 flex-1 overflow-hidden">
+      <header className="sticky top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4 lg:pt-5">
+        <div className="mx-auto grid w-full max-w-[1240px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 rounded-[24px] border border-line bg-panel/95 px-3 py-3 shadow-panel backdrop-blur-xl sm:gap-3 sm:px-5 lg:grid-cols-[minmax(220px,0.9fr)_minmax(0,1fr)_auto]">
+          <Link href="/" className="min-w-0 overflow-hidden">
             <span className="block truncate">
               <Label className="text-text max-[359px]:hidden">Case File / {siteTitle}</Label>
             </span>
@@ -46,24 +46,26 @@ export function Navbar() {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-5 lg:flex">
+          <nav className="hidden items-center justify-center lg:flex">
+            <div className="flex items-center gap-1 rounded-full border border-line bg-background-soft/70 p-1">
             {siteNavigation.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm text-text-muted transition-colors hover:text-text"
+                className="rounded-full px-3 py-2 text-sm text-text-muted transition-colors hover:bg-background hover:text-text"
               >
                 {item.label}
               </Link>
             ))}
+            </div>
           </nav>
 
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2 justify-self-end">
             <button
               type="button"
               onClick={() => setPaletteOpen(true)}
               aria-label="Open command palette"
-              className="inline-flex items-center gap-2 rounded-full border border-line bg-background-soft px-2.5 py-2 text-sm text-text transition-colors hover:border-line-strong sm:px-3"
+              className="inline-flex items-center gap-2 rounded-full border border-line bg-background-soft px-2.5 py-2 text-sm text-text transition-colors hover:border-line-strong hover:bg-background sm:px-3"
             >
               <span className="max-[379px]:hidden">Open Index</span>
               <span className="min-[380px]:hidden">Index</span>
@@ -76,7 +78,7 @@ export function Navbar() {
               onClick={() => setMenuOpen((current) => !current)}
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
-              className="inline-flex items-center rounded-full border border-line px-2.5 py-2 text-sm text-text transition-colors hover:border-line-strong sm:px-3 lg:hidden"
+              className="inline-flex items-center rounded-full border border-line px-2.5 py-2 text-sm text-text transition-colors hover:border-line-strong hover:bg-background-soft sm:px-3 lg:hidden"
             >
               Menu
             </button>
@@ -88,6 +90,13 @@ export function Navbar() {
             id="mobile-navigation"
             className="mx-auto mt-3 w-full max-w-[1240px] rounded-[24px] border border-line bg-panel px-4 py-4 shadow-panel lg:hidden"
           >
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <Label className="text-text">Navigation Index</Label>
+              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-text-soft">
+                {siteNavigation.length} entries
+              </span>
+            </div>
+
             <nav className="grid gap-2">
               {siteNavigation.map((item) => (
                 <Link

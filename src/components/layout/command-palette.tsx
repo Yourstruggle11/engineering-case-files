@@ -87,6 +87,24 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
       );
     });
   }, [normalizedQuery]);
+  const groupedCommands = useMemo(() => {
+    const groups = new Map<string, PaletteCommand[]>();
+
+    for (const command of filteredCommands) {
+      const existing = groups.get(command.group);
+
+      if (existing) {
+        existing.push(command);
+      } else {
+        groups.set(command.group, [command]);
+      }
+    }
+
+    return Array.from(groups.entries()).map(([group, commands]) => ({
+      group,
+      commands
+    }));
+  }, [filteredCommands]);
 
   useEffect(() => {
     if (!open) {
@@ -208,6 +226,10 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
             placeholder="Search cases, sections, or links"
             className="mt-4 w-full rounded-2xl border border-line bg-background px-4 py-3 text-base text-text outline-none transition-colors placeholder:text-text-soft focus:border-accent"
           />
+          <div className="mt-3 flex items-center justify-between gap-3 text-xs text-text-soft">
+            <span>{filteredCommands.length} matching entries</span>
+            <span className="hidden sm:inline">Enter to open / Esc to close</span>
+          </div>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto p-2.5 sm:p-4">
           {filteredCommands.length === 0 ? (
@@ -215,31 +237,47 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
               No matching entries.
             </p>
           ) : (
-            <div className="grid gap-2">
-              {filteredCommands.map((command, index) => (
-                <button
-                  key={`${command.group}-${command.label}`}
-                  type="button"
-                  onClick={() => runCommand(command)}
-                  className={`rounded-2xl border px-3.5 py-3 text-left transition-colors sm:px-4 ${
-                    index === selectedIndex
-                      ? "border-accent bg-accent-soft"
-                      : "border-line bg-background-soft hover:border-line-strong"
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-sm font-medium text-text">{command.label}</p>
-                      <p className="mt-1 text-xs text-text-soft">
-                        {command.group} / {command.meta}
-                      </p>
+            <div className="grid gap-4">
+              {(() => {
+                let commandIndex = 0;
+
+                return groupedCommands.map(({ group, commands }) => (
+                  <section key={group} className="rounded-[22px] border border-line bg-background-soft/50 p-2.5 sm:p-3">
+                    <div className="px-2 pb-2 pt-1 sm:px-3">
+                      <Label>{group}</Label>
                     </div>
-                    <span className="hidden font-mono text-[11px] uppercase tracking-[0.22em] text-text-soft sm:inline">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                </button>
-              ))}
+                    <div className="grid gap-2">
+                      {commands.map((command) => {
+                        const currentIndex = commandIndex;
+                        commandIndex += 1;
+
+                        return (
+                          <button
+                            key={`${command.group}-${command.label}`}
+                            type="button"
+                            onClick={() => runCommand(command)}
+                            className={`rounded-2xl border px-3.5 py-3 text-left transition-colors sm:px-4 ${
+                              currentIndex === selectedIndex
+                                ? "border-accent bg-accent-soft"
+                                : "border-line bg-background-soft hover:border-line-strong"
+                            }`}
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <div>
+                                <p className="text-sm font-medium text-text">{command.label}</p>
+                                <p className="mt-1 text-xs text-text-soft">{command.meta}</p>
+                              </div>
+                              <span className="hidden font-mono text-[11px] uppercase tracking-[0.22em] text-text-soft sm:inline">
+                                {String(currentIndex + 1).padStart(2, "0")}
+                              </span>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </section>
+                ));
+              })()}
             </div>
           )}
         </div>

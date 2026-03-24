@@ -166,6 +166,15 @@ export const contactSignals: InfoNote[] = [
   }
 ];
 
+export const footerCopy = {
+  label: "End of File",
+  title: "A curated archive of product engineering, system design, and developer tooling work.",
+  description:
+    "Built as a documented case-file index rather than a portfolio gallery, with the strongest signal placed on outcomes, structure, and engineering judgment.",
+  closingNote:
+    "Available for senior frontend and full-stack roles, product engineering work, and collaborations around React systems, SaaS workflows, and tooling."
+};
+
 export const contactLinks: ExternalLinkItem[] = [
   {
     label: "Email",
