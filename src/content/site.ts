@@ -188,12 +188,12 @@ export const contactLinks: ExternalLinkItem[] = [
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/souviksen11",
+    href: "https://linkedin.com/in/yourstruggle11",
     detail: "Professional profile, current context, and career history."
   },
   {
     label: "Medium",
-    href: "https://medium.com/@souviksen093",
+    href: "https://medium.com/@yourstruggle11",
     detail: "Technical writing on React internals, systems, and implementation tradeoffs."
   }
 ];

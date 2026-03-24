@@ -23,8 +23,8 @@ const structuredData = {
       email: "mailto:souviksen093@gmail.com",
       sameAs: [
         "https://github.com/Yourstruggle11",
-        "https://linkedin.com/in/souviksen11",
-        "https://medium.com/@souviksen093"
+        "https://linkedin.com/in/yourstruggle11",
+        "https://medium.com/@yourstruggle11"
       ],
       knowsAbout: [
         "React",

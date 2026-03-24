@@ -57,7 +57,7 @@ export const caseFiles: CaseFile[] = [
       { label: "Live Demo", href: "https://react-dragdrop-kit.netlify.app/" },
       {
         label: "Medium Article",
-        href: "https://medium.com/@souviksen093/drag-and-drop-in-react-doesnt-have-to-be-painful-meet-react-dragdrop-kit-4c73b5022145"
+        href: "https://medium.com/@yourstruggle11/drag-and-drop-in-react-doesnt-have-to-be-painful-meet-react-dragdrop-kit-4c73b5022145"
       }
     ]
   },
