@@ -6,12 +6,19 @@ export type NavItem = {
 export type ExternalLinkItem = {
   label: string;
   href: string;
+  detail?: string;
 };
 
 export type SectionCopy = {
   label: string;
   title: string;
   description: string;
+};
+
+export type InfoNote = {
+  label: string;
+  value: string;
+  detail: string;
 };
 
 export type HeroHighlight = {

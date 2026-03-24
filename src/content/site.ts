@@ -1,6 +1,7 @@
 import type {
   ExternalLinkItem,
   HeroHighlight,
+  InfoNote,
   NavItem,
   SectionCopy
 } from "@/content/types";
@@ -93,7 +94,7 @@ export const sectionCopy: Record<
 > = {
   cases: {
     label: "Featured Cases",
-    title: "Three documented investigations across interface systems, real-time architecture, and full-stack product delivery.",
+    title: "Three documented investigations across interface systems, real-time architecture, and product delivery.",
     description:
       "Each case is framed as a solved engineering file: what the problem was, what had to be understood, how the approach was shaped, and what evidence supports the outcome."
   },
@@ -129,9 +130,61 @@ export const sectionCopy: Record<
   }
 };
 
+export const casesRegister: InfoNote[] = [
+  {
+    label: "Recorded Files",
+    value: "03 active cases",
+    detail: "UI engineering, real-time systems, and full-stack product delivery."
+  },
+  {
+    label: "Coverage",
+    value: "Interface to workflow",
+    detail: "The set spans frontend systems, delivery architecture, and user-facing product surfaces."
+  },
+  {
+    label: "Method",
+    value: "Problem to evidence",
+    detail: "Each file follows the same documented structure instead of behaving like a gallery card."
+  }
+];
+
+export const contactSignals: InfoNote[] = [
+  {
+    label: "Best Fit",
+    value: "React systems and frontend architecture",
+    detail: "Especially product surfaces where performance, structure, and maintainability matter together."
+  },
+  {
+    label: "Also Open",
+    value: "Real-time SaaS workflows and tooling",
+    detail: "Useful when the work mixes interface quality with workflow depth, system clarity, and internal product tooling."
+  },
+  {
+    label: "Preferred Mode",
+    value: "Roles, product work, and thoughtful collaboration",
+    detail: "Strong conversations usually start with a concrete product, system, or developer-experience problem."
+  }
+];
+
 export const contactLinks: ExternalLinkItem[] = [
-  { label: "Email", href: "mailto:souviksen093@gmail.com" },
-  { label: "GitHub", href: "https://github.com/Yourstruggle11" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/souviksen11" },
-  { label: "Medium", href: "https://medium.com/@souviksen093" }
+  {
+    label: "Email",
+    href: "mailto:souviksen093@gmail.com",
+    detail: "Primary inbox for roles, product work, and collaborations."
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/Yourstruggle11",
+    detail: "Open source, tooling, and documented engineering projects."
+  },
+  {
+    label: "LinkedIn",
+    href: "https://linkedin.com/in/souviksen11",
+    detail: "Professional profile, current context, and career history."
+  },
+  {
+    label: "Medium",
+    href: "https://medium.com/@souviksen093",
+    detail: "Technical writing on React internals, systems, and implementation tradeoffs."
+  }
 ];
