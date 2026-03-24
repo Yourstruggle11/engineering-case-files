@@ -63,7 +63,7 @@ export function EvidenceSection() {
 
           <Divider className="mt-6 lg:mt-8" label="Logged Findings" />
 
-          <div className="mt-6 grid gap-3 sm:gap-4 lg:grid-cols-3">
+          <div className="mt-6 grid gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-3">
             {supportingMetrics.map((metric, index) => (
               <EvidenceCard
                 key={metric.title}

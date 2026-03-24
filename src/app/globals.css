@@ -21,6 +21,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
 }
 
 body {
@@ -73,6 +74,10 @@ img {
 }
 
 @layer base {
+  section[id] {
+    scroll-margin-top: 6.5rem;
+  }
+
   h1,
   h2,
   h3,

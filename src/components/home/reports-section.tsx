@@ -28,7 +28,7 @@ export function ReportsSection() {
       </FadeIn>
       <FadeIn className="section-stack" delay={0.04}>
         <SectionFrame>
-          <div className="grid gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-stretch">
+          <div className="grid gap-4 sm:gap-5 xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] xl:items-stretch">
             <article className="flex h-full flex-col rounded-[24px] border border-line-strong bg-[linear-gradient(180deg,rgba(143,187,207,0.08),rgba(143,187,207,0.02))] p-5 sm:p-6 lg:p-7">
               <div>
                 <Label>Featured Report</Label>

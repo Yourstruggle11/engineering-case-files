@@ -25,7 +25,7 @@ export function ArchiveSection() {
             {archiveItems.map((item, index) => (
               <article
                 key={item.name}
-                className={`grid gap-4 py-5 sm:gap-5 sm:py-6 lg:grid-cols-[112px_minmax(0,1fr)_auto] lg:items-start lg:gap-8 ${
+                className={`grid gap-4 py-5 sm:gap-5 sm:py-6 xl:grid-cols-[112px_minmax(0,1fr)_auto] xl:items-start xl:gap-8 ${
                   index !== archiveItems.length - 1 ? "border-b border-line" : ""
                 }`}
               >
@@ -38,7 +38,7 @@ export function ArchiveSection() {
                   </h3>
                   <p className="mt-3 text-text-muted">{item.description}</p>
                 </div>
-                <div className="lg:justify-self-end">
+                <div className="xl:justify-self-end">
                   <ExternalLink href={item.href} className="button-secondary w-full sm:w-auto">
                     Open Archive Item
                   </ExternalLink>

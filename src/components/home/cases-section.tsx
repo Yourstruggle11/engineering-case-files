@@ -30,11 +30,11 @@ export function CasesSection() {
         <SectionFrame>
           <div className="grid gap-6 lg:gap-8">
             <div className="rounded-[24px] border border-line bg-background-soft/55 px-4 py-4 sm:px-5 sm:py-5">
-              <div className="grid gap-4 sm:grid-cols-3 sm:gap-0">
+              <div className="grid gap-4 md:grid-cols-3 md:gap-0">
                 {casesRegister.map((item, index) => (
                   <article
                     key={item.label}
-                    className={index === 0 ? "sm:pr-4" : "sm:border-l sm:border-line sm:px-4"}
+                    className={index === 0 ? "md:pr-4" : "md:border-l md:border-line md:px-4"}
                   >
                     <Label>{item.label}</Label>
                     <p className="mt-2 text-sm text-text sm:text-[15px]">{item.value}</p>
@@ -46,7 +46,7 @@ export function CasesSection() {
 
             <Divider label="Case Register" />
 
-            <div className="grid gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-start">
+            <div className="grid gap-4 sm:gap-5 xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] xl:items-start">
               <CaseCard caseFile={featuredCase} delay={0.05} variant="feature" />
 
               <div className="grid gap-4 sm:gap-5">

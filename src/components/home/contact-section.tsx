@@ -27,7 +27,7 @@ export function ContactSection() {
 
               <Divider label="Current Status" />
 
-              <div className="grid gap-3 sm:grid-cols-3">
+              <div className="grid gap-3 md:grid-cols-3">
                 {heroCopy.dossier.metadata.map((item) => (
                   <div
                     key={item.label}

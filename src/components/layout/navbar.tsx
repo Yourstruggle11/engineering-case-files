@@ -46,17 +46,17 @@ export function Navbar() {
             </span>
           </Link>
 
-          <nav className="hidden items-center justify-center lg:flex">
+          <nav className="hidden items-center justify-center xl:flex">
             <div className="flex items-center gap-1 rounded-full border border-line bg-background-soft/70 p-1">
-            {siteNavigation.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-full px-3 py-2 text-sm text-text-muted transition-colors hover:bg-background hover:text-text"
-              >
-                {item.label}
-              </Link>
-            ))}
+              {siteNavigation.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-full px-3 py-2 text-sm text-text-muted transition-colors hover:bg-background hover:text-text"
+                >
+                  {item.label}
+                </Link>
+              ))}
             </div>
           </nav>
 
@@ -78,7 +78,7 @@ export function Navbar() {
               onClick={() => setMenuOpen((current) => !current)}
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
-              className="inline-flex items-center rounded-full border border-line px-2.5 py-2 text-sm text-text transition-colors hover:border-line-strong hover:bg-background-soft sm:px-3 lg:hidden"
+              className="inline-flex items-center rounded-full border border-line px-2.5 py-2 text-sm text-text transition-colors hover:border-line-strong hover:bg-background-soft sm:px-3 xl:hidden"
             >
               Menu
             </button>
@@ -88,7 +88,7 @@ export function Navbar() {
         {menuOpen ? (
           <div
             id="mobile-navigation"
-            className="mx-auto mt-3 w-full max-w-[1240px] rounded-[24px] border border-line bg-panel px-4 py-4 shadow-panel lg:hidden"
+            className="mx-auto mt-3 w-full max-w-[1240px] rounded-[24px] border border-line bg-panel px-4 py-4 shadow-panel xl:hidden"
           >
             <div className="mb-3 flex items-center justify-between gap-3">
               <Label className="text-text">Navigation Index</Label>
