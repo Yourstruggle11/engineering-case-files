@@ -37,7 +37,12 @@ export async function generateMetadata({
     openGraph: {
       title: `CASE ${caseFile.caseNumber} - ${caseFile.title} | Souvik Sen`,
       description: caseFile.summary,
-      url: absoluteUrl(`/cases/${caseFile.slug}`)
+      url: absoluteUrl(`/cases/${caseFile.slug}`),
+      type: "article"
+    },
+    twitter: {
+      title: `CASE ${caseFile.caseNumber} - ${caseFile.title}`,
+      description: caseFile.summary
     }
   };
 }
@@ -50,5 +55,30 @@ export default async function CasePage({ params }: CasePageProps) {
     notFound();
   }
 
-  return <CaseDetail caseFile={caseFile} />;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: `CASE ${caseFile.caseNumber} - ${caseFile.title}`,
+    headline: caseFile.title,
+    description: caseFile.summary,
+    url: absoluteUrl(`/cases/${caseFile.slug}`),
+    author: {
+      "@type": "Person",
+      name: "Souvik Sen",
+      url: absoluteUrl("/")
+    },
+    keywords: [caseFile.filedUnder, "Engineering Case Files", ...caseFile.links.map((link) => link.label)]
+  };
+
+  const structuredDataJson = JSON.stringify(structuredData).replace(/</g, "\\u003c");
+
+  return (
+    <>
+      <CaseDetail caseFile={caseFile} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: structuredDataJson }}
+      />
+    </>
+  );
 }

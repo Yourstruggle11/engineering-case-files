@@ -11,17 +11,40 @@ type CaseDetailProps = {
   caseFile: CaseFile;
 };
 
+const caseSectionItems = [
+  { id: "background", label: "01", title: "Background" },
+  { id: "problem", label: "02", title: "The Problem" },
+  { id: "investigation", label: "03", title: "Investigation" },
+  { id: "approach", label: "04", title: "Approach" },
+  { id: "architecture", label: "05", title: "Architecture" },
+  { id: "outcome", label: "06", title: "Outcome" },
+  { id: "evidence", label: "07", title: "Evidence" },
+  { id: "links", label: "08", title: "Links" }
+] as const;
+
 type SectionBlockProps = {
+  id: string;
   label: string;
   title: string;
   children: ReactNode;
 };
 
-function SectionBlock({ label, title, children }: SectionBlockProps) {
+function getReferenceMeta(href: string) {
+  try {
+    return new URL(href).hostname.replace(/^www\./, "");
+  } catch {
+    return href;
+  }
+}
+
+function SectionBlock({ id, label, title, children }: SectionBlockProps) {
   const sectionLabel = `Section ${label}`;
 
   return (
-    <section className="grid gap-5 lg:grid-cols-[minmax(180px,0.34fr)_minmax(0,1fr)] lg:gap-10">
+    <section
+      id={id}
+      className="grid gap-5 lg:grid-cols-[minmax(180px,0.34fr)_minmax(0,1fr)] lg:gap-10"
+    >
       <div className="hidden lg:block">
         <Label>{sectionLabel}</Label>
         <h2 className="mt-3 max-w-[9ch] text-[2rem] leading-[1.02] text-text">{title}</h2>
@@ -79,7 +102,7 @@ export function CaseDetail({ caseFile }: CaseDetailProps) {
 
               <Divider className="mt-6" label="File Register" />
 
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              <div className="mt-4 grid gap-3 md:grid-cols-3">
                 {fileRegister.map((item) => (
                   <article
                     key={item.label}
@@ -121,6 +144,26 @@ export function CaseDetail({ caseFile }: CaseDetailProps) {
                   </ExternalLink>
                 ))}
               </div>
+
+              <div className="mt-6 hidden xl:block">
+                <Divider label="Case Structure" />
+                <nav className="mt-4 grid gap-2">
+                  {caseSectionItems.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={`#${item.id}`}
+                      className="rounded-[18px] border border-line bg-background-soft/75 px-4 py-3 transition-colors hover:border-line-strong hover:text-accent"
+                    >
+                      <span className="flex items-center justify-between gap-3">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-text-soft">
+                          {item.label}
+                        </span>
+                        <span className="text-sm text-text">{item.title}</span>
+                      </span>
+                    </Link>
+                  ))}
+                </nav>
+              </div>
             </aside>
           </div>
         </SectionFrame>
@@ -128,7 +171,7 @@ export function CaseDetail({ caseFile }: CaseDetailProps) {
 
       <div className="mt-10 grid gap-8 sm:mt-12 sm:gap-10 lg:mt-14 lg:gap-12">
         <FadeIn delay={0.06}>
-          <SectionBlock label="01" title="Background">
+          <SectionBlock id="background" label="01" title="Background">
             <div className="rounded-[22px] border border-line bg-background-soft/70 p-5 sm:p-6">
               <p className="reading-copy max-w-none">{caseFile.background}</p>
             </div>
@@ -136,7 +179,7 @@ export function CaseDetail({ caseFile }: CaseDetailProps) {
         </FadeIn>
 
         <FadeIn delay={0.08}>
-          <SectionBlock label="02" title="The Problem">
+          <SectionBlock id="problem" label="02" title="The Problem">
             <div className="rounded-[22px] border border-line bg-background-soft/70 p-5 sm:p-6">
               <p className="reading-copy max-w-none">{caseFile.problem}</p>
             </div>
@@ -144,7 +187,7 @@ export function CaseDetail({ caseFile }: CaseDetailProps) {
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <SectionBlock label="03" title="Investigation">
+          <SectionBlock id="investigation" label="03" title="Investigation">
             <ol className="grid gap-3 sm:gap-4">
               {caseFile.investigation.map((item, index) => (
                 <li
@@ -160,7 +203,7 @@ export function CaseDetail({ caseFile }: CaseDetailProps) {
         </FadeIn>
 
         <FadeIn delay={0.12}>
-          <SectionBlock label="04" title="Approach">
+          <SectionBlock id="approach" label="04" title="Approach">
             <ol className="grid gap-3 sm:gap-4">
               {caseFile.approach.map((item, index) => (
                 <li
@@ -176,7 +219,7 @@ export function CaseDetail({ caseFile }: CaseDetailProps) {
         </FadeIn>
 
         <FadeIn delay={0.14}>
-          <SectionBlock label="05" title="Architecture">
+          <SectionBlock id="architecture" label="05" title="Architecture">
             <div className="grid gap-3 sm:gap-4 md:grid-cols-2 2xl:grid-cols-3">
               {caseFile.architecture.map((item, index) => (
                 <article
@@ -192,7 +235,7 @@ export function CaseDetail({ caseFile }: CaseDetailProps) {
         </FadeIn>
 
         <FadeIn delay={0.16}>
-          <SectionBlock label="06" title="Outcome">
+          <SectionBlock id="outcome" label="06" title="Outcome">
             <div className="rounded-[22px] border border-line bg-background-soft/70 p-5 sm:p-6">
               <p className="reading-copy max-w-none">{caseFile.outcomeDetail}</p>
             </div>
@@ -200,7 +243,7 @@ export function CaseDetail({ caseFile }: CaseDetailProps) {
         </FadeIn>
 
         <FadeIn delay={0.18}>
-          <SectionBlock label="07" title="Evidence">
+          <SectionBlock id="evidence" label="07" title="Evidence">
             <div className="grid gap-3 sm:gap-4 md:grid-cols-2 2xl:grid-cols-3">
               {caseFile.evidence.map((item) => (
                 <article
@@ -217,15 +260,25 @@ export function CaseDetail({ caseFile }: CaseDetailProps) {
         </FadeIn>
 
         <FadeIn delay={0.2}>
-          <SectionBlock label="08" title="Links">
-            <div className="rounded-[22px] border border-line bg-background-soft/70 p-4 sm:p-5">
-              <div className="flex flex-wrap gap-3">
-                {caseFile.links.map((link) => (
-                  <ExternalLink key={link.href} href={link.href} className="button-secondary">
-                    {link.label}
-                  </ExternalLink>
-                ))}
-              </div>
+          <SectionBlock id="links" label="08" title="Links">
+            <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
+              {caseFile.links.map((link, index) => (
+                <article
+                  key={link.href}
+                  className="rounded-[20px] border border-line bg-background-soft/70 p-4 sm:p-5"
+                >
+                  <Label>Reference {String(index + 1).padStart(2, "0")}</Label>
+                  <h3 className="mt-3 text-xl leading-tight text-text">{link.label}</h3>
+                  <p className="mt-2 break-all text-sm text-text-soft">
+                    {getReferenceMeta(link.href)}
+                  </p>
+                  <div className="mt-4">
+                    <ExternalLink href={link.href} className="button-secondary w-full sm:w-auto">
+                      Open Reference
+                    </ExternalLink>
+                  </div>
+                </article>
+              ))}
             </div>
           </SectionBlock>
         </FadeIn>
